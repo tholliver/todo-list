@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	
-	<title>Document</title>
-</head>
-<body>
-	<h1><%= deyo%></h1>
-	<ul>
-		<li>Comprar nuevos [Charger]</li>
-		<li>Get a haircut</li>
-		<li>Get a oculist EyeCheck</li>
-	</ul>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="box" id="heading">
+			<h1><%= listTitle %></h1>
+		</div>
 
- <form class="" action="/" method="post">
- 	<input type="text" name="newItem">
+		<div class="box">
+			<% newListItems.forEach(function(item){ %>
+			<form action="/delete" method="post">
+				<div class="item">
+					<input
+						type="checkbox"
+						name="checkbox"
+						value="<%= item._id%>"
+						onChange="this.form.submit()"
+					>
+					<p><%=item.name%></p>
+				</div>
+				<input type="hidden" name="listName" value="<%listTitle%>"></input>
+			</form>
+			<% }) %>
+		</div>
 
- 	<button type="submit" name="button">Nueva Tarea</button>
- </form>
-	
-</body>
+		<form class="item" action="/" method="post">
+			<input type="text" name="newItem" autocomplete="off">
+
+			<button type="submit" name="list" value="<%= listTitle %>">+</button>
+		</form>
+	</body>
 </html>
