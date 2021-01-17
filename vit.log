@@ -1,0 +1,6 @@
+#
+#--Good practices:(Yu recommends) 
+#So as good practice lets add some [let] instead of ~[var]
+#--Sintax on EJS 
+#Any ejs function needs to be cloed by <% MyList.forEach(fucntion(item){}) %>
+#to close the above start line is      <% })%>
