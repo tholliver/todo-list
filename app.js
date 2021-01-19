@@ -44,6 +44,15 @@ const List = mongoose.model("List", listSchema);
 
 app.get("/", function (req, res) {
 	let today = new Date();
+	var todoLits;
+	List.find({}, function (err, foundItems) {
+		//console.log("Massa tips",foundItems);
+		if (foundItems) {			
+			todoLits = foundItems 
+		} else {
+			console.log("Someting went wrong, reciving data", err);
+		}
+	});
 	/*	let currentDay = today.getDay();	//actual day (0-6)
 	let month = today.getMonth();     //actual month (0-11)
 	let actualDate = today.getDate() //the actual date (1-31)
@@ -73,6 +82,7 @@ app.get("/", function (req, res) {
 			res.redirect("/");
 		} else {
 			res.render("list", {
+				alltodos: todoLits,
 				listTitle: "Today",
 				newListItems: foundItems,
 			});
@@ -81,6 +91,9 @@ app.get("/", function (req, res) {
 	//showScreen
 });
 
+
+
+//The custon post for add new items into lists in the db
 app.post("/", function (req, res) {
 	const itemName = req.body.newItem;
 	const listName = req.body.list;
@@ -135,6 +148,14 @@ app.post("/delete", function (req, res) {
 
 app.get("/:customListName", function (req, res) {
 	console.log(req.params.customListName);
+	var todoLits=[];
+	List.find({}, function (err, foundItems) {
+		if (foundItems) {			
+			todoLits = foundItems 
+		} else {
+			console.log("Someting went wrong, reciving data", err);
+		}
+	});
 
 	let customListNameRecived = req.params.customListName.toLowerCase();
 
@@ -150,6 +171,7 @@ app.get("/:customListName", function (req, res) {
 				res.redirect("/" + customListNameRecived);
 			} else {
 				res.render("list", {
+					alltodos: todoLits,
 					listTitle: results.name,
 					newListItems: results.items,
 				});

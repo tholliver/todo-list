@@ -6,6 +6,23 @@
 		<title>My TodoList</title>
 	</head>
 	<body>
+		<div>
+			<select name="select" onchange="if (this.value) window.location.href=this.value">
+				<option>Seleccione una lista</option>	
+		        <% alltodos.forEach(function(list){ %>
+           
+             <div class="timeline-time">
+             
+              <option  value="<%= list.name %>"> <%= list.name %> </option> 
+              
+             </div>
+          
+            	<% }) %>		
+
+			</select>
+		
+		</div>
+	              
 		<div class="box" id="heading">
 			<h1><%= listTitle %></h1>
 		</div>
