@@ -2,7 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<title>Document</title>
+		<link rel="icon" href="/images/favicond.ico" type="image/x-icon" />
+		<title>My TodoList</title>
 	</head>
 	<body>
 		<div class="box" id="heading">
@@ -21,7 +22,7 @@
 					>
 					<p><%=item.name%></p>
 				</div>
-				<input type="hidden" name="listName" value="<%listTitle%>"></input>
+				<input type="hidden" name="listNames" value="<%=listTitle%>"></input>
 			</form>
 			<% }) %>
 		</div>

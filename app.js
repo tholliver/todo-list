@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+
+app.use('/public', express.static('public'));
+
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,6 +17,7 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost:27017/todoListDB", {
 	useUnifiedTopology: true,
 	useNewUrlParser: true,
+	useFindAndModify: false,
 });
 
 const itemsSchema = {
@@ -80,20 +84,18 @@ app.get("/", function (req, res) {
 app.post("/", function (req, res) {
 	const itemName = req.body.newItem;
 	const listName = req.body.list;
-	console.log('Placing the name list',listName);
+	//console.log('Placing the name list',listName);
 	//console.log(itemName, listName);
 	const item = new Item({ name: itemName });
 	if (listName === "Today") {
 		item.save();
 		res.redirect("/");
 	} else {
-		
-
 		List.findOne({ name: listName }, (errs, listres) => {
 			if (errs) {
 				console.error(errs);
 			} else {
-				console.log(listres);
+				//console.log(listres);
 				if (listres) {
 					listres.items.push(item);
 					listres.save();
@@ -108,16 +110,27 @@ app.post("/", function (req, res) {
 
 app.post("/delete", function (req, res) {
 	const itemID = req.body.checkbox;
-	const listName = req.doby.listName;
+	const listName = req.body.listNames; //if We Need to delete a todo-list
 	console.log(listName);
-	Item.findByIdAndRemove(itemID, function (err) {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log("Item deleted");
-			res.redirect("/");
-		}
-	});
+	if (listName === "Today") {
+		Item.findByIdAndRemove(itemID, function (err) {
+			if (err) {
+				console.log(err);
+			} else {
+				res.redirect("/");
+			}
+		});
+	} else {
+		List.findOneAndUpdate(
+			{ name: listName },
+			{ $pull: { items: { _id: itemID } } },
+			function (err, foundList) {
+				if (!err) {
+					res.redirect("/" + listName);
+				}
+			}
+		);
+	}
 });
 
 app.get("/:customListName", function (req, res) {
