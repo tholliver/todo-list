@@ -123,7 +123,7 @@ app.post("/", function (req, res) {
 app.post("/delete", function (req, res) {
 	const itemID = req.body.checkbox;
 	const listName = req.body.listNames; //if We Need to delete a todo-list
-	console.log("Deleting....: ", listName);
+	//console.log("Deleting....: ", listName);
 	if (listName === "Today") {
 		Item.findByIdAndRemove(itemID, function (err) {
 			if (err) {
@@ -148,7 +148,7 @@ app.post("/delete", function (req, res) {
 app.post("/deletelist", function (req, res) {
 	const itemID = req.body.removebox;
 	let listName = req.body.listass.toLowerCase(); //if We Need to delete a todo-list
-	console.log("We selected...: ", req.body.listass);
+	//console.log("We selected...: ", req.body.listass);
 	if (listName) {
 		List.deleteOne({ name: listName }, function (err) {
 			if (err) {
@@ -163,7 +163,7 @@ app.post("/deletelist", function (req, res) {
 });
 
 app.get("/:customListName", function (req, res) {
-	console.log("Entering new list.....", req.params.customListName);
+	//console.log("Entering new list.....", req.params.customListName);
 	var todoLits = [];
 	//Maybe not the practical second query | Is getting the TODO-Lists
 	List.find({}, function (err, foundItems) {
