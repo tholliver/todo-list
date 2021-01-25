@@ -3,31 +3,34 @@
 	<head>
 		<meta charset="UTF-8" />
 		<link rel="icon" href="/images/favicond.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="/css/styles.css" >
 		<title>My TodoList</title>
 	</head>
 	<body>
-		<div>
-			<select name="select" onchange="if (this.value) window.location.href=this.value">
-				<option>Seleccione una lista</option>	
+		<div class="box-delete">
+			<form id="top-list" action="/deletelist" method="post">
+			  <select name="selected" onchange="if (this.value) window.location.href=this.value">
+				<option>Selec. una lista</option>	
 		        <% alltodos.forEach(function(list){ %>
-           
-             <div class="timeline-time">
-             
-              <option  value="<%= list.name %>"> <%= list.name %> </option> 
-              
-             </div>
-          
-            	<% }) %>		
 
-			</select>
+                <option value="<%= list.name %>"> <%= list.name %> </option> 
+   			  <% }) %>		
+              </select>
+
+			
+			<button class="massa" type="submit" name="listass" value="<%= listTitle %>"><img src="images/delete.png"></button>
+			</form>
+			
 		
 		</div>
 	              
-		<div class="box" id="heading">
+		<div class="box" id="heading"> 
 			<h1><%= listTitle %></h1>
 		</div>
 
-		<div class="box">
+
+
+		<div class="box" >
 			<% newListItems.forEach(function(item){ %>
 			<form action="/delete" method="post">
 				<div class="item">
@@ -42,12 +45,15 @@
 				<input type="hidden" name="listNames" value="<%=listTitle%>"></input>
 			</form>
 			<% }) %>
+		
+		
+			<form class="item" id="todoform" action="/" method="post">
+			   <input type="text" name="newItem" autocomplete="off" placeholder="New Item">
+
+			   <button type="submit" name="list" value="<%= listTitle %>">+</button>
+		    </form>
 		</div>
 
-		<form class="item" action="/" method="post">
-			<input type="text" name="newItem" autocomplete="off">
-
-			<button type="submit" name="list" value="<%= listTitle %>">+</button>
-		</form>
+		
 	</body>
 </html>

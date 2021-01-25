@@ -4,3 +4,6 @@
 #--Sintax on EJS 
 #Any ejs function needs to be cloed by <% MyList.forEach(fucntion(item){}) %>
 #to close the above start line is      <% })%>
+
+#-----------BUGS-------------
+#The looper(foreach) recives an undefined  
