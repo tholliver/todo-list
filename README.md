@@ -7,8 +7,8 @@ $ cd todo-list
 $ npm install 
 $ nodemon app.js
 ```
-Open your browser at localhost/3000 
-###### Default PORT: 3000
+Open your browser at localhost/5000
+###### Default PORT: 5000
 
 ### Mini intro manual:  
 Create a new [LIST] provinding the list name in the url field.
