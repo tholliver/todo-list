@@ -1,8 +1,15 @@
 html {
-  background-color: #e4e9fd;
-  background-image: -webkit-linear-gradient(65deg, #a683e3 50%, #e4e9fd 50%);
-  min-height: 1000px;
-  font-family: "helvetica neue";
+    /* background-color: #e4e9fd;
+  background-image: -webkit-linear-gradient(65deg, #a683e3, #e4e9fd 50%); */
+  background-image: url("/images/backgrounds/minur.jpg");
+  /* background-repeat: no-repeat; */
+  background-size: cover;
+   -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+   /* min-height: 1000px; */
+  font-family: "helvetica meue";
+
 }
 
 h1 {
@@ -73,6 +80,8 @@ h1 {
   background-color: #a683e3;
   text-align: center;
 }
+
+/* THE DELETE A LIST BUTTOM */
 .massa {
   padding: 5px 5px 0px 5px;
   margin-left: 10px;
@@ -124,7 +133,7 @@ form .item {
   margin-left: 20px;
 }
 
-button {
+button.addbutton {
   min-height: 50px;
   width: 50px;
   border-radius: 50%;

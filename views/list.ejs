@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<link rel="icon" href="/images/favicond.ico" type="image/x-icon" />
 		<link rel="stylesheet" href="/css/styles.css" >
-		<title>My TodoList</title>
+		<title>My TodoList | <%= listTitle %></title>
 	</head>
 	<body>
 		<div class="box-delete">
@@ -50,7 +50,7 @@
 			<form class="item" id="todoform" action="/" method="post">
 			   <input type="text" name="newItem" autocomplete="off" placeholder="New Item">
 
-			   <button type="submit" name="list" value="<%= listTitle %>">+</button>
+			   <button class="addbutton" type="submit" name="list" value="<%= listTitle %>">+</button>
 		    </form>
 		</div>
 

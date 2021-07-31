@@ -1,8 +1,29 @@
+const { MongoClient } = require('mongodb');
 const express = require("express");
 const bodyParser = require("body-parser");
 
+require('dotenv').config();
+
+const USERNAME = process.env.USERNAME_M;
+const PASSWORD = process.env.PASSWORD_M;
+const url_server = process.env.URL_API;
+
 //Adding mongoose
+
 const mongoose = require("mongoose");
+//Starting
+/*
+const uri = "mongodb+srv://"+USERNAME+":"+PASSWORD+"@cluster0.ollqx.mongodb.net/Cluster0?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+  const db = client.db("sample_airbnb");
+  const collection = client.db('sample_airbnb').collection('listingsAndReviews').find({});
+  //console.log(collection);
+  client.close();
+});
+//
+
+*/
 
 const app = express();
 
@@ -12,8 +33,13 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+
 app.use(express.static("public"));
-mongoose.connect("mongodb://localhost:27017/todoListDB", {
+
+//old URL 
+// "mongodb://localhost:27017/todoListDB"
+mongoose.connect(url_server, {
 	useUnifiedTopology: true,
 	useNewUrlParser: true,
 	useFindAndModify: false,
@@ -42,8 +68,13 @@ const listSchema = {
 const List = mongoose.model("List", listSchema);
 
 app.get("/", function (req, res) {
+	console.log("Password massa", USERNAME);
 	let today = new Date();
 	var todoLits=[];
+	// The new one 
+
+
+	// The old one 
 	List.find({}, function (err, foundItems) {
 		//console.log("Massa tips",foundItems);
 		if (foundItems) {
@@ -94,10 +125,11 @@ app.get("/", function (req, res) {
 
 //The custon post for add new items into lists in the db
 app.post("/", function (req, res) {
+	console.log("Massa BRO given params: ");
 	const itemName = req.body.newItem;
 	const listName = req.body.list;
-	//console.log('Placing the name list',listName);
-	//console.log(itemName, listName);
+	console.log('Placing the name list',listName);
+	console.log('itemName', listName);
 	const item = new Item({ name: itemName });
 	if (listName === "Today") {
 		item.save();
@@ -105,9 +137,10 @@ app.post("/", function (req, res) {
 	} else {
 		List.findOne({ name: listName }, (errs, listres) => {
 			if (errs) {
+
 				console.error(errs);
 			} else {
-				//console.log(listres);
+		 		console.log("Found the lists: ",listres);
 				if (listres) {
 					listres.items.push(item);
 					listres.save();
@@ -145,9 +178,10 @@ app.post("/delete", function (req, res) {
 	}
 });
 
+
 app.post("/deletelist", function (req, res) {
 	const itemID = req.body.removebox;
-	let listName = req.body.listass.toLowerCase(); //if We Need to delete a todo-list
+	let listName = req.body.listass; //if We Need to delete a todo-list
 	//console.log("We selected...: ", req.body.listass);
 	if (listName) {
 		List.deleteOne({ name: listName }, function (err) {
@@ -163,7 +197,7 @@ app.post("/deletelist", function (req, res) {
 });
 
 app.get("/:customListName", function (req, res) {
-	//console.log("Entering new list.....", req.params.customListName);
+	console.log("Entering new list.....", req.params.customListName);
 	var todoLits = [];
 	//Maybe not the practical second query | Is getting the TODO-Lists
 	List.find({}, function (err, foundItems) {
@@ -174,8 +208,9 @@ app.get("/:customListName", function (req, res) {
 		}
 	});
 
-	const customListNameRecived = req.params.customListName.toLowerCase();
-	let upperName = customListNameRecived.charAt(0).toUpperCase() + customListNameRecived.slice(1);
+	//const customListNameRecived = req.params.customListName.toLowerCase();
+	const customListNameRecived = req.params.customListName;
+	//let upperName = customListNameRecived.charAt(0).toUpperCase() + customListNameRecived.slice(1);
 	List.findOne({ name: customListNameRecived }, function (err, results) {
 		if (!err) {
 			if (!results) {
@@ -191,7 +226,7 @@ app.get("/:customListName", function (req, res) {
 			} else {
 				res.render("list", {
 					alltodos: todoLits,
-					listTitle: upperName,
+					listTitle: customListNameRecived,
 					newListItems: results.items,
 				});
 			}
