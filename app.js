@@ -67,7 +67,7 @@ const listSchema = {
 const List = mongoose.model("List", listSchema);
 
 app.get("/", function (req, res) {
-	console.log("Password massa", USERNAME);
+	console.log("Password mass");
 	let today = new Date();
 	var todoLits=[];
 	// The new one 
@@ -236,6 +236,6 @@ app.get("/:customListName", function (req, res) {
 	});
 });
 
-app.listen(3000, function () {
-	console.log("The app is runnig on port 3000");
+app.listen(process.env.PORT || 5000, function () {
+	console.log("The app is runnig on port 5000");
 });
