@@ -4,9 +4,8 @@ const bodyParser = require("body-parser");
 
 require('dotenv').config();
 
-const USERNAME = process.env.USERNAME_M;
-const PASSWORD = process.env.PASSWORD_M;
-const url_server = process.env.URL_API;
+
+const url_server = process.env.URI_MONGO;
 
 //Adding mongoose
 
