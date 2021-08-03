@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" href="/images/favicond.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="/css/homestyle.css" >
+		<title>Михаил MV | Коза Ностра</title>
+	</head>
+	
+<%- include('partials/navbar') %>
+
+
+
+	<body onload="startTime()">
+
+		<header>
+
+        <div class="main" >
+
+            <div class="profile">
+                <div class="round-monkey">
+
+                    <img class="mono" src="images/chilling.jpg" alt="Image" height="200" width="200">
+
+                </div>
+
+            </div>
+
+            <div id="clock" >
+                <p class = "date" id="dates"></p>
+                <p class ="time" id="times"></p>
+				<p class ="timed"></p>
+				<script>
+                 function startTime() {
+                    var today = new Date();
+                    //today.
+                    
+                   
+                    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    let a  = today.toLocaleDateString("en-US", options);
+                    // THE HOURS
+                    var h = today.getHours();
+                    var m = today.getMinutes();
+                    var s = today.getSeconds();
+                    m = checkTime(m);
+                    s = checkTime(s);
+
+                    document.getElementById('dates').innerHTML = a;
+
+                    document.getElementById('times').innerHTML =
+                    h + ":" + m + ":" + s;
+                    var t = setTimeout(startTime, 500);
+                 }   
+                     // add zero in front of numbers < 10
+                 function checkTime(i) {
+                     if (i < 10) {i = "0" + i};  
+                      return i;
+                }
+                </script>
+                <p class="text">Методом проб и ошибок, это метод ошибок и проб!</p>
+            </div>
+
+            <!-- -->
+            <!--<img class="mountain" src="images/webpic.png" alt="mountain image">-->
+
+            <!-- Searcher -->
+            <div id="realbox-input-wrapper">
+
+                <form action="http://www.google.com/search" method="get">
+                    <input id="realbox" type="search" autocomplete="off" spellcheck="false" aria-live="polite"
+                        autofocus="" name="q" placeholder="chto by vy khoteli iskat' segodnya?">
+                </form>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <div class="second-part">
+        <p>MASSA</p>
+        
+    </div>	
+	        <%- include("partials/footer") %>    
+	           
+
+	</body>
+</html>
