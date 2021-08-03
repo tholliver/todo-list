@@ -141,7 +141,7 @@ app.post("/", function (req, res) {
 	const item = new Item({ name: itemName });
 	if (listName === "Today") {
 		item.save();
-		res.redirect("/");
+		res.redirect("/tasklist");
 	} else {
 		List.findOne({ name: listName }, (errs, listres) => {
 			if (errs) {
@@ -170,7 +170,7 @@ app.post("/delete", function (req, res) {
 			if (err) {
 				console.log(err);
 			} else {
-				res.redirect("/");
+				res.redirect("/tasklist");
 			}
 		});
 	} else {
@@ -196,11 +196,11 @@ app.post("/deletelist", function (req, res) {
 			if (err) {
 				console.log(err);
 			} else {
-				res.redirect("/");
+				res.redirect("/tasklist");
 			}
 		});
 	} else {
-		res.redirect("/");
+		res.redirect("/tasklist");
 	}
 });
 
