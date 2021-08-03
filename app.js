@@ -2,6 +2,8 @@ const { MongoClient } = require('mongodb');
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const path = require('path');
+
 require('dotenv').config();
 
 
@@ -26,7 +28,9 @@ client.connect(err => {
 
 const app = express();
 
-app.use("/public", express.static("public"));
+//app.use("/public", express.static("public"));
+
+app.set('views', path.join(__dirname, 'views'));
 
 app.set("view engine", "ejs");
 
@@ -34,7 +38,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-app.use(express.static("public"));
+//app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, 'public')))
 
 //old URL 
 // "mongodb://localhost:27017/todoListDB"
@@ -66,7 +71,11 @@ const listSchema = {
 
 const List = mongoose.model("List", listSchema);
 
-app.get("/", function (req, res) {
+app.get('/', function (req, res, next) {
+    res.render('index', {});
+});
+
+app.get("/tasklist", function (req, res) {
 	console.log("Password mass");
 	let today = new Date();
 	var todoLits=[];
